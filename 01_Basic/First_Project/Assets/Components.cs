@@ -34,12 +34,28 @@ public class Components : MonoBehaviour
         //}
 
         Vector3 vec = new Vector3(
-            Input.GetAxisRaw("Horizontal") * 5, 0, Input.GetAxisRaw("Vertical") * 5);
+            Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
 
         rigid.AddForce(vec, ForceMode.Impulse);
 
         // 3. 회전력
         // AddTorque(Vec) : Vec 방향을 축으로 회전력이 생김.
         //rigid.AddTorque(Vector3.up);
+    }
+
+    // 콜라이더가 계속 충돌하고 있을 때 호출
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.name == "Cube")
+        {
+            Debug.Log("경고");
+            rigid.AddForce(Vector3.up * 2, ForceMode.Impulse);
+        }
+            
+    }
+
+    public void Jump()
+    {
+        rigid.AddForce(Vector3.up * 20, ForceMode.Impulse);
     }
 }
